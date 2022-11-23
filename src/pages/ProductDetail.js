@@ -25,6 +25,8 @@ function ProductDetails()
       quantity: state.quantity,
       category: state.category,
     }
+
+    console.log(fruits)
    // let x = fruits.user_id;
     
     
@@ -61,8 +63,9 @@ function ProductDetails()
 
     const submitProduct = (e) => {
       e.preventDefault();
-
+      
       const data = {
+        seller_id: state.user_id,
         fruits_id: state.id,
         fruits_qty: value,  
         name: state.name,
@@ -89,6 +92,7 @@ function ProductDetails()
           swal("Warning",res.data.message,"warning");
         }
       });
+      console.log(data)
 
     }
     

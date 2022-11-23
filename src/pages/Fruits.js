@@ -23,6 +23,7 @@ function FruitPages()
         
       }, []);
       console.log(data)
+      
     if(loading)
     {
         return <h4>Loading Product Data...</h4>

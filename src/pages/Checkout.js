@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import NavbarCustomer from './NavbarCustomer';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
 
 function Checkout() 
@@ -11,6 +11,7 @@ function Checkout()
 
     const location = useLocation();
     const state = location.state;
+    const history = useNavigate();
     const [loading, setLoading] = useState(true);
     const [cart, setCart] = useState(state);
 
@@ -29,10 +30,10 @@ function Checkout()
     const cart_id = state.id;
     const data = {
         item_id: state.id,
+        seller_id: state.seller_id,
         name: state.name,
         price: state.price,
         fruits_qty: state.fruits_qty,
-
     }
 
     useEffect(() => {
@@ -48,6 +49,8 @@ function Checkout()
         });
       },[cart_id]);
 
+      console.log(data)
+
       const handleInput = (e) => {
         e.persist();
         setCheckoutInput({...checkoutInput, [e.target.name]: e.target.value});
@@ -56,7 +59,9 @@ function Checkout()
       const submitOrder = (e) => {
         e.preventDefault();
 
-        const orderData = {
+        const orders = {
+            cart_id: state.id,
+            seller_id: state.seller_id,
             firstname:JSON.parse(localStorage.getItem('customer')).firstname,
             middlename:JSON.parse(localStorage.getItem('customer')).middlename,
             lastname:JSON.parse(localStorage.getItem('customer')).lastname,
@@ -66,11 +71,14 @@ function Checkout()
             customerId:JSON.parse(localStorage.getItem('customer')).id
         }
 
-        axios.post(`http://localhost:8000/api/place-order`, orderData).then(res=> {
+        console.log(orders)
+
+        axios.post(`http://localhost:8000/api/place-order`, orders).then(res=> {
             if(res.data.status === 200)
             {
                 swal("Order Placed Successfully", res.data.message, "Success")
                 setError([]);
+                history('/basket');
             }
             else if(res.data.status === 422)
             {
@@ -79,7 +87,6 @@ function Checkout()
             }
         });
       }
-      console.log(orderData)
       
       if(loading)
       {

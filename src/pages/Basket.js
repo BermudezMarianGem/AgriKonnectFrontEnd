@@ -1,13 +1,15 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import NavbarCustomer from './NavbarCustomer';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function Basket() 
 {
+    const location = useLocation();
+    const state = location.state;
     const [customer, setCustomer] = useState({});
     const [loading, setLoading] = useState(true);
-    const [cart, setCart] = useState([]);
+    const [cart, setCart] = useState(state);
     var totalCartPrice = 0;
 
     useEffect(() => {
@@ -23,7 +25,9 @@ function Basket()
                 setLoading(false);
             }
         });
+        
       },[customer]);
+      console.log(cart)
       
       const handleDecrement = (cart_id) => {
             setCart(cart =>

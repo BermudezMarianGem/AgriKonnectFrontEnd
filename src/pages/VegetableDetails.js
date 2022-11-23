@@ -7,6 +7,9 @@ import NavbarCustomer from './NavbarCustomer';
 
 function VegetableDetails()
 {
+    let user = JSON.parse(localStorage.getItem('user-info'))
+    localStorage.setItem('user', JSON.stringify(user))
+
     const location = useLocation();
     const state = location.state;
     const [data, setData] = useState(state);
@@ -20,6 +23,7 @@ function VegetableDetails()
       description: state.description,
       price: state.price,
       quantity: state.quantity,
+      category: state.category,
     }
     //let x = vege.user_id;
     
@@ -56,6 +60,7 @@ function VegetableDetails()
         e.preventDefault();
   
         const data = {
+          seller_id: state.user_id,
           fruits_id: state.id,
           fruits_qty: value,  
           name: state.name,
@@ -104,11 +109,14 @@ function VegetableDetails()
           <div className='row'>
             <h4>Vegetable Section</h4>
             <div className='col-md-8'>
-              <h4>{vege.name}</h4>
-              <p>Description: {vege.description}</p>
-              <p>
-                Price: {vege.price}
-              </p>
+              <h4>{vege.name}<p>by AgriKonnect</p></h4>
+              <p>Category: {vege.category}</p>
+              <p>Growing Method: {vege.description}</p>
+              <p>Price: {vege.price} </p>
+              <p>Quantity: {value}</p>
+              <div>
+                <p>Seller: {user.firstname}</p>
+              </div>
             </div>
 
             <div className='row'>
@@ -123,6 +131,7 @@ function VegetableDetails()
               </div>
               <div className='col-md-3 mt-3'>
                 <button type="submit" className='btn btn-primary w-100' >Add to Basket</button>
+                <button type="submit" className='btn btn-primary w-100' >Buy Now</button>
               </div>
             </div>
           </div>
