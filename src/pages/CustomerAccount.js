@@ -23,12 +23,7 @@ function CustomerAccount()
                 <div>
                     <div className="card" style={{ width:160 , marginLeft:20}}>
                         <div className="card-body">
-                            <Link to={"/"}className="card-text">To Pay</Link>
-                        </div>
-                    </div>
-                    <div className="card" style={{ width:160 , marginLeft:20}}>
-                        <div className="card-body">
-                            <Link to={"/"}className="card-text">To Ship</Link>
+                            <Link to={"/toPay"}className="card-text">To Pay</Link>
                         </div>
                     </div>
                     <div className="card" style={{ width:160 , marginLeft:20}}>

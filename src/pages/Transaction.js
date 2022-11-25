@@ -1,11 +1,14 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import Sidebars from './Sidebars';
 
-function TransactionPage() 
+function TransactionPage(props) 
 {
+    const location = useLocation();
+    const state = location.state;
     const [loading, setLoading] = useState(true);
-    const [orders, setOrders] = useState([]);
+    const [order_items, setItems] = useState(state);
 
     let user = JSON.parse(localStorage.getItem('user-info'))
     const user_id = user.id;
@@ -14,13 +17,12 @@ function TransactionPage()
         
         axios.get(`http://localhost:8000/api/showOrder/${user_id}`).then((res) => {
           if (res.status === 200) {
-            setOrders(res.data.orders);
+            setItems(res.data.order_items);
             setLoading(false);
           }
         });
         
       }, [user_id]);
-      console.log(orders)
       
       
       if(loading)
@@ -28,19 +30,20 @@ function TransactionPage()
             return <h4>Loading Transaction Data...</h4>
         }
 
-        if (orders.length > 0)
+        if (order_items.length > 0)
         {
             var showOrderList = "";
-            showOrderList = orders.map( (item, idx) => {
+            showOrderList = order_items.map( (item, idx) => {
                 return(
-                    <div className='col-md-3' key={idx}>
-                        <div className='card'>
-                            <div className='card-body'>
-                                <h5>{item.id}</h5>
-                                <h4>{item.firstname}</h4>
-                            </div>
-                        </div>
-                    </div>
+                    <tr key={idx}>
+                        <td>{item.order_id}</td>
+                        <td>{item.order_name}</td>
+                        <td>{item.qty}</td>
+                        <td>{item.total_price}.00</td>
+                        <Link to={`/order-details/${item.order_id}`} state={item} className="btn btn-primary">
+                                <h5>View Product Details</h5>
+                                </Link>
+                    </tr>
                 )
             });
 
@@ -67,12 +70,19 @@ function TransactionPage()
                     <button className='btn btn-primary'>Ongoing</button><button className='btn btn-primary'>Delivered</button>
                     <div className="card-body">
                                 
-                    <div className='py-3'>
-                        <div className='row'>
-                            {showOrderList}
-                        </div>
-
-                    </div>
+                    <table className="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Product Name</th>
+                                    <th>Quantity (kg) </th>
+                                    <th>Total Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {showOrderList}
+                            </tbody>
+                        </table>
                 </div>
                 </div>
             </div>

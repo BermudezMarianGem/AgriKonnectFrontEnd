@@ -40,7 +40,8 @@ import AdminTable from './pages/Admin';
 import EditSeller from './pages/EditSeller';
 import EditUserImage from './pages/EditUserImage';
 import Checkout from './pages/Checkout';
-
+import OrderDetails from './pages/OrderDetails';
+import ToPay from './pages/ToPay';
 
 
 function App() 
@@ -74,6 +75,8 @@ function App()
 
             <Route path="/basket" element={<Basket/>} />
             <Route path="/checkout/:id" element={<Checkout/>}/>
+            <Route path="/toPay" element={<ToPay/>}/>
+      
             <Route path="/customer-account" element={<CustomerAccount/>} />
             <Route path="/edit-customeraccount" element={<EditCustomerAccount/>} />
 
@@ -85,6 +88,7 @@ function App()
             <Route path="/edit-password" element={<EditPassword/>} />
             <Route path="/review" element={<Review/>}/>
             <Route path="/transaction" element={<TransactionPage/>} />
+            <Route path="/order-details/:id" element={<OrderDetails/>}/>
             <Route path="/products" element={<ViewProduct/>} />
             <Route path="/add-product" element={<AddProduct/>} />
             <Route path="/edit-product" element={<EditProduct/>} />
