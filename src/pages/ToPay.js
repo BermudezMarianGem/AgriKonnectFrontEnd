@@ -12,7 +12,6 @@ function ToPay()
     const [customer, setCustomer] = useState({});
     const [loading, setLoading] = useState(true);
     const [toPay, setToPay] = useState(state);
-    //const [order, setOrder] = useState(state);
 
     useEffect(() => {
         if (Object.keys(customer).length === 0) {

@@ -42,6 +42,8 @@ import EditUserImage from './pages/EditUserImage';
 import Checkout from './pages/Checkout';
 import OrderDetails from './pages/OrderDetails';
 import ToPay from './pages/ToPay';
+import OngoingPage from './pages/Ongoing';
+import OngoingDetails from './pages/OngoingDetails';
 
 
 function App() 
@@ -76,7 +78,9 @@ function App()
             <Route path="/basket" element={<Basket/>} />
             <Route path="/checkout/:id" element={<Checkout/>}/>
             <Route path="/toPay" element={<ToPay/>}/>
-      
+            <Route path="/to-ship" element={<OngoingPage/>}/>
+            <Route path="/to-ship-details/:id" element={<OngoingDetails/>}/>
+            
             <Route path="/customer-account" element={<CustomerAccount/>} />
             <Route path="/edit-customeraccount" element={<EditCustomerAccount/>} />
 

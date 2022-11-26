@@ -77,7 +77,6 @@ function ViewProduct({userData}) {
             <div className='card card-body py05 text-center shadow-sm'>
                 <h4>Welcome {user.name}</h4>
                 <h6>You can now post your products.</h6>
-                <Link to={'/add-product'} className="btn btn-primary btn-sm float-end"> Add Product</Link>
             </div>
         </div>
       }

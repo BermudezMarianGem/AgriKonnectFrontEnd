@@ -41,6 +41,9 @@ function VegetablePage()
                                 <Link to={`/vegetables/${item.name}`} state={item}>
                                 <h5>{item.name}</h5>
                                 </Link>
+                                <hr></hr>
+                                <p>Price: Php {item.price}.00</p>
+                                <p>Seller: {item.seller_name}</p>
                             </div>
                         </div>
                     </div>

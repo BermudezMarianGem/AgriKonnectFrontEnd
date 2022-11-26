@@ -4,67 +4,31 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
 import Sidebars from './Sidebars';
 
-function OrderDetails(props) 
+function OngoingDetails(props) 
 {
     const location = useLocation();
     const state = location.state;
     const history = useNavigate();
     const [loading, setLoading] = useState(true);
-    const [orders, setOrders] = useState(state);
-    const [orderItem, setItems] = useState([]);
+    const [toShip, setToShip] = useState(state);
 
     const order_id = state.order_id;
-    //const customerId = orders.user_id;
-    const productName = state.order_name;
-    const qty = state.qty;
-    const price = state.price;
-    const totalPrice = state.total_price;
 
     useEffect(() => {
         
-        axios.get(`http://localhost:8000/api/orderDetails/${order_id}`).then((res) => {
+        axios.get(`http://localhost:8000/api/to-ship-details/${order_id}`).then((res) => {
           if (res.status === 200) {
-            setOrders(res.data.orders);
-            setItems(res.data.order_items[0]);
+            setToShip(res.data.ongoing);
             setLoading(false);
           }
         });
         
       }, [order_id]);
       
-      const orderApproved = (e) => {
-        e.preventDefault();
-
-        const approvedOrders = {
-            seller_id: state.seller_id,
-            order_id: state.order_id,
-            order_name: state.order_name,
-            order_qty: state.qty,
-            order_price: state.price,
-            order_total: state.total_price,
-            firstname: orderItem.firstname,
-            middlename: orderItem.middlename,
-            lastname: orderItem.lastname,
-            mobilephone: orderItem.mobilephone,
-            shippingaddress: orderItem.shippingaddress,
-            modeofpayment: orderItem.modeofpayment,
-            
-        }
-
-
-        console.log(orderItem)
-        console.log(approvedOrders)
-
-        axios.post(`http://localhost:8000/api/approve-order`, approvedOrders).then(res=> {
-            if(res.data.status === 200)
-            {
-                swal("Order Approved!!", res.data.message, "Success")
-            }
-         });
-      }
+    
       if(loading)
         {
-            return <h4>Loading Order Details Data...</h4>
+            return <h4>Loading To Ship Order Details...</h4>
         }
             /*var showOrderDetails = "";
             showOrderDetails = orders.map( (item, idx) => {
@@ -97,32 +61,32 @@ function OrderDetails(props)
                     </div>
                 )
             });*/
-            var orderDetails_HTMLTABLE = "";
+            var toShipOrder_HTMLTABLE = "";
        
-            orderDetails_HTMLTABLE = orders.map( (item, index) => {
+            toShipOrder_HTMLTABLE = toShip.map( (item, index) => {
                 return (
                     
                     <tr key={index}>
                         <td>{item.id}</td>
-                        <td>{productName}</td>
-                        <td>{qty}</td>
-                        <td>{price}</td>
-                        <td>{totalPrice}</td>
+                        <td>{item.order_name}</td>
+                        <td>{item.order_qty}</td>
+                        <td>{item.order_price}</td>
+                        <td>{item.order_total}</td>
                     </tr>
                 );
             });
 
-            var orderInfo_HTMLTABLE = "";
+            var orderInfos_HTMLTABLE = "";
        
-            orderInfo_HTMLTABLE = orders.map( (item, index) => {
+            orderInfos_HTMLTABLE = toShip.map( (item, index) => {
                 return (
                     
                     <tr key={index}>
                         <td>{item.firstname} {item.middlename} {item.lastname}</td>
-                        <td>{item.mobilephone}</td>
+                        <td>{item.contactNo}</td>
                         <td>{item.shippingaddress}</td>
                         <td>{item.modeofpayment}</td>
-                        <td></td>
+                        <td><button type="submit" className='btn btn-primary w-100' >Out for Delivery</button></td>
                     </tr>
                 );
             });
@@ -131,9 +95,9 @@ function OrderDetails(props)
     return (
         <>
         <Sidebars/>
-        <Link to={'/transaction'} className="btn btn-danger btn-sm float-end"> BACK</Link>
+        <Link to={'/to-ship'} className="btn btn-danger btn-sm float-end"> BACK</Link>
         <div>
-            <form  onSubmit={orderApproved}>
+        <form>
             <div className='content'>
                 <div className='contentText'>
                     <div className='col-md-12'>
@@ -155,7 +119,7 @@ function OrderDetails(props)
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {orderDetails_HTMLTABLE}
+                                        {toShipOrder_HTMLTABLE}
                                     </tbody>
                                 </table>
 
@@ -175,25 +139,24 @@ function OrderDetails(props)
                                             <th>Mobile Phone</th>
                                             <th>Shipping Address</th>
                                             <th>Mode of Payment</th>
-                                            <th></th>
+                                            <th>Shipping Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {orderInfo_HTMLTABLE}
+                                        {orderInfos_HTMLTABLE}
                                     </tbody>
                                 </table>
-                                <button type="submit" className='btn btn-primary w-100' >Approved Order</button>
+                                
                             </div>
                         </div>
                 </div>
                 </div>
             </div>
             </form>
-            
         </div>
        </> 
     );
 
 }
 
-export default OrderDetails;
+export default OngoingDetails;

@@ -10,6 +10,7 @@ function AddProduct() {
     const [productInput, setProduct] = useState({
         category:'',
         name: '',
+        seller_name: '',
         description: '',
         price: '',
         quantity: '',
@@ -27,6 +28,7 @@ function AddProduct() {
         const data = {
             category:productInput.category,
             name:productInput.name,
+            seller_name:JSON.parse(localStorage.getItem('user')).firstname,
             description:productInput.description,
             price:productInput.price,
             quantity:productInput.quantity,

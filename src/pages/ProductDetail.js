@@ -7,8 +7,6 @@ import NavbarCustomer from './NavbarCustomer';
 
 function ProductDetails()
 {
-    let user = JSON.parse(localStorage.getItem('user-info'))
-    localStorage.setItem('user', JSON.stringify(user))
 
     const location = useLocation();
     const state = location.state;
@@ -20,6 +18,7 @@ function ProductDetails()
     const fruits = {
       user_id: state.user_id,
       name: state.name,
+      seller_name: state.seller_name,
       description: state.description,
       price: state.price,
       quantity: state.quantity,
@@ -147,7 +146,7 @@ function ProductDetails()
               <p>Price: {fruits.price} </p>
               <p>Quantity: {value}</p>
               <div>
-                <p>Seller: {user.firstname}</p>
+                <p>Seller: {fruits.seller_name}</p>
               </div>
             </div>
             <div className='row'>
