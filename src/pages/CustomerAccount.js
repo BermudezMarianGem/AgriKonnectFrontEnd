@@ -28,12 +28,12 @@ function CustomerAccount()
                     </div>
                     <div className="card" style={{ width:160 , marginLeft:20}}>
                         <div className="card-body">
-                            <Link to={"/"}className="card-text">To Receive</Link>
+                            <Link to={"/toReceive"}className="card-text">To Receive</Link>
                         </div>
                     </div>
                     <div className="card" style={{ width:160 , marginLeft:20}}>
                         <div className="card-body">
-                            <Link to={"/"}className="card-text">To Review</Link>
+                            <Link to={"/toReview"}className="card-text">To Review</Link>
                         </div>
                     </div>
                 </div>

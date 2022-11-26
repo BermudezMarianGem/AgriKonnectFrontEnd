@@ -20,6 +20,7 @@ function VegetableDetails()
     const vege = {
       user_id: state.user_id,
       name: state.name,
+      seller_name: state.seller_name,
       description: state.description,
       price: state.price,
       quantity: state.quantity,
@@ -115,7 +116,7 @@ function VegetableDetails()
               <p>Price: {vege.price} </p>
               <p>Quantity: {value}</p>
               <div>
-                <p>Seller: {user.firstname}</p>
+                <p>Seller: {vege.seller_name}</p>
               </div>
             </div>
 

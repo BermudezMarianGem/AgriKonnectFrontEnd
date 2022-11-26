@@ -37,6 +37,7 @@ function OrderDetails(props)
 
         const approvedOrders = {
             seller_id: state.seller_id,
+            customer_id: state.user_id,
             order_id: state.order_id,
             order_name: state.order_name,
             order_qty: state.qty,
@@ -51,9 +52,7 @@ function OrderDetails(props)
             
         }
 
-
         console.log(orderItem)
-        console.log(approvedOrders)
 
         axios.post(`http://localhost:8000/api/approve-order`, approvedOrders).then(res=> {
             if(res.data.status === 200)

@@ -8,7 +8,6 @@ function OngoingDetails(props)
 {
     const location = useLocation();
     const state = location.state;
-    const history = useNavigate();
     const [loading, setLoading] = useState(true);
     const [toShip, setToShip] = useState(state);
 
@@ -25,10 +24,37 @@ function OngoingDetails(props)
         
       }, [order_id]);
       
-    
+      const outforDelivery = (e) => {
+        e.preventDefault();
+
+        const outfordelivery = {
+            seller_id: state.seller_id,
+            customer_id: state.customer_id,
+            order_id: state.order_id,
+            order_name: state.order_name,
+            order_qty: state.order_qty,
+            order_price: state.order_price,
+            order_total: state.order_total,
+            firstname: state.firstname,
+            middlename: state.middlename,
+            lastname: state.lastname,
+            contactNo: state.contactNo,
+            shippingaddress: state.shippingaddress,
+            modeofpayment: state.modeofpayment,
+            
+        }
+
+        axios.post(`http://localhost:8000/api/out-for-delivery`, outfordelivery).then(res=> {
+            if(res.data.status === 200)
+            {
+                swal("Order is out for Delivery", res.data.message, "Success")
+            }
+         });
+      }
+
       if(loading)
         {
-            return <h4>Loading To Ship Order Details...</h4>
+            return <h4>Loading Delivery Orders...</h4>
         }
             /*var showOrderDetails = "";
             showOrderDetails = orders.map( (item, idx) => {
@@ -86,7 +112,7 @@ function OngoingDetails(props)
                         <td>{item.contactNo}</td>
                         <td>{item.shippingaddress}</td>
                         <td>{item.modeofpayment}</td>
-                        <td><button type="submit" className='btn btn-primary w-100' >Out for Delivery</button></td>
+                        <td><button type="submit" className='btn btn-primary w-100' onClick={outforDelivery}>Out for Delivery</button></td>
                     </tr>
                 );
             });
@@ -97,7 +123,7 @@ function OngoingDetails(props)
         <Sidebars/>
         <Link to={'/to-ship'} className="btn btn-danger btn-sm float-end"> BACK</Link>
         <div>
-        <form>
+        <form >
             <div className='content'>
                 <div className='contentText'>
                     <div className='col-md-12'>
@@ -146,7 +172,6 @@ function OngoingDetails(props)
                                         {orderInfos_HTMLTABLE}
                                     </tbody>
                                 </table>
-                                
                             </div>
                         </div>
                 </div>

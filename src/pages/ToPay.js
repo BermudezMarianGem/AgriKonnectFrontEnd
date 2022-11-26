@@ -21,16 +21,13 @@ function ToPay()
         axios.get(`http://127.0.0.1:8000/api/show-to-pay/${customer.id}`).then(res=>{
             if(res.status === 200)
             {
-                //console.log(res.data)
                 setToPay(res.data.toPay)
-                //setOrder(res.data.order_items)
                 setLoading(false);
             }
         });
         
       },[customer]);
       console.log(toPay)
-      //console.log(order)
       if(loading)
       {
           return <h4>Loading Basket...</h4>
@@ -47,7 +44,7 @@ function ToPay()
                             <h6>Price: Php {item.price}.00</h6>
                             <h6>Quantity: {item.qty}kg</h6>
                             <h6>Total Price: Php {item.total_price}.00</h6>
-                            <Link to ={`/order-received/${item.id}`} state={item}className="btn btn-primary" >Order Received</Link>
+                            <h6>Pending..</h6>
                         </div>
                     </div>
                 </div>

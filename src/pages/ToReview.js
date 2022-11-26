@@ -1,48 +1,49 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import Sidebars from './Sidebars';
+import NavbarCustomer from './NavbarCustomer';
 
-function TransactionPage(props) 
+function ToReviewPage() 
 {
     const location = useLocation();
     const state = location.state;
     const [loading, setLoading] = useState(true);
-    const [order_items, setItems] = useState(state);
+    const [toReview, setReview] = useState(state);
 
-    let user = JSON.parse(localStorage.getItem('user-info'))
-    const user_id = user.id;
+    let customer = JSON.parse(localStorage.getItem('user-info'))
+    const user_id = customer.id;
 
     useEffect(() => {
-        
-        axios.get(`http://localhost:8000/api/showOrder/${user_id}`).then((res) => {
+
+        axios.get(`http://localhost:8000/api/to-review/${user_id}`).then((res) => {
           if (res.status === 200) {
-            setItems(res.data.order_items);
+            setReview(res.data.delivered);
             setLoading(false);
           }
         });
         
       }, [user_id]);
       
+      console.log(toReview)
       
       if(loading)
         {
-            return <h4>Loading Transaction Data...</h4>
+            return <h4>Loading To Review Orders...</h4>
         }
 
-        if (order_items.length > 0)
+        if (toReview.length > 0)
         {
-            var showOrderList = "";
-            showOrderList = order_items.map( (item, idx) => {
+            var showToReviewOrders = "";
+            showToReviewOrders = toReview.map( (item, idx) => {
                 return(
                     <tr key={idx}>
                         <td>{item.order_id}</td>
                         <td>{item.order_name}</td>
-                        <td>{item.qty}</td>
-                        <td>{item.total_price}.00</td>
-                        <Link to={`/order-details/${item.order_id}`} state={item} className="btn btn-primary">
-                                <h5>View Product Details</h5>
-                                </Link>
+                        <td>{item.order_qty}</td>
+                        <td>{item.order_total}.00</td>
+                        <Link to={`/to-review/${item.order_id}`} state={item} className="btn btn-primary">
+                            <h5>Review</h5>
+                        </Link>
                     </tr>
                 )
             });
@@ -50,7 +51,7 @@ function TransactionPage(props)
         }
 
         else {
-            showOrderList =<div>
+            showToReviewOrders =<div>
                 <div className='card card-body py05 text-center shadow-sm'>
                 <h4></h4>
                 <h6>No Available transaction</h6>
@@ -62,12 +63,11 @@ function TransactionPage(props)
 
     return (
         <>
-        <Sidebars/>
+        <NavbarCustomer/>
         <div>
             <div className='content'>
                 <div className='contentText'>
-                    <p>Transaction Page</p>
-                    <Link to = '/to-ship' className="btn btn-primary" >Ongoing</Link><Link to = '/delivered' className="btn btn-primary" >Delivered</Link>
+                    <p>Delivered Orders</p>
                     <div className="card-body">
                                 
                     <table className="table table-bordered table-striped">
@@ -77,10 +77,11 @@ function TransactionPage(props)
                                     <th>Product Name</th>
                                     <th>Quantity (kg) </th>
                                     <th>Total Price</th>
+                                    <th>Review</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {showOrderList}
+                                {showToReviewOrders}
                             </tbody>
                         </table>
                 </div>
@@ -92,4 +93,4 @@ function TransactionPage(props)
 
 }
 
-export default TransactionPage;
+export default ToReviewPage;

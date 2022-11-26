@@ -13,7 +13,6 @@ import ViewAccount from './pages/ViewAccount';
 import TransactionPage from './pages/Transaction';
 import EditAccount from './pages/EditAccount';
 import EditPassword from './pages/EditPassword';
-import Review from './pages/Review';
 
 // Landing and Selection for both Account
 import LandingPage from './pages/LandingPage';
@@ -29,7 +28,6 @@ import EditCustomerAccount from './pages/EditCustomerAccount';
 import VegetablePage from './pages/Vegetables';
 import FruitPages from './pages/Fruits';
 import SalePage from './pages/Sale';
-import FreeDeliveryPage from './pages/Delivery';
 import SearchProduct from './pages/SearchProduct';
 import ProductDetails from './pages/ProductDetail';
 import VegetableDetails from './pages/VegetableDetails';
@@ -44,6 +42,11 @@ import OrderDetails from './pages/OrderDetails';
 import ToPay from './pages/ToPay';
 import OngoingPage from './pages/Ongoing';
 import OngoingDetails from './pages/OngoingDetails';
+import ToReceivedPage from './pages/ToReceived';
+import DeliveryPage from './pages/Delivery';
+import ToReviewPage from './pages/ToReview';
+import ReviewPage from './pages/Review';
+import OrderReviewPage from './pages/OrderReview';
 
 
 function App() 
@@ -72,7 +75,6 @@ function App()
             <Route path="/fruits/:name" element={<ProductDetails/>}/>
             <Route path="/vegetables/:name" element={<VegetableDetails/>}/>  
             <Route path="/sales" element={<SalePage/>}/>
-            <Route path="/freedelivery" element={<FreeDeliveryPage/>}/>
             <Route path="/searchproduct" element={<SearchProduct/>}/>
 
             <Route path="/basket" element={<Basket/>} />
@@ -80,6 +82,11 @@ function App()
             <Route path="/toPay" element={<ToPay/>}/>
             <Route path="/to-ship" element={<OngoingPage/>}/>
             <Route path="/to-ship-details/:id" element={<OngoingDetails/>}/>
+            <Route path="/toReceive" element={<ToReceivedPage/>}/>
+            <Route path="/delivered" element={<DeliveryPage/>}/>
+            <Route path="/toReview" element={<ToReviewPage/>}/>
+            <Route path="/to-review/:id" element={<ReviewPage/>}/>
+            <Route path="/order-review/:id" element={<OrderReviewPage/>}/>
             
             <Route path="/customer-account" element={<CustomerAccount/>} />
             <Route path="/edit-customeraccount" element={<EditCustomerAccount/>} />
@@ -90,7 +97,6 @@ function App()
             <Route path="/accountview" element={<ViewAccount/>} />
             <Route path="/edit-account" element={<EditAccount/>}/>
             <Route path="/edit-password" element={<EditPassword/>} />
-            <Route path="/review" element={<Review/>}/>
             <Route path="/transaction" element={<TransactionPage/>} />
             <Route path="/order-details/:id" element={<OrderDetails/>}/>
             <Route path="/products" element={<ViewProduct/>} />
