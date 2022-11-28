@@ -12,9 +12,9 @@ function ReviewPage()
     const [loading, setLoading] = useState(true);
     const [toReview, setReview] = useState(state);
 
-
-    let customer = JSON.parse(localStorage.getItem('user-info'))
-    const user_id = customer.id;
+    const order_id = state.order_id;
+    const productName = state.order_name;
+    const orderTotal = state.order_total;
 
     const [reviewInput, setReviewInput] = useState({
         review: '',
@@ -24,14 +24,16 @@ function ReviewPage()
 
     useEffect(() => {
 
-        axios.get(`http://localhost:8000/api/to-review/${user_id}`).then((res) => {
+        axios.get(`http://localhost:8000/api/to-review-item/${order_id}`).then((res) => {
           if (res.status === 200) {
-            setReview(res.data.delivered[0]);
+            setReview(res.data.delivered);
             setLoading(false);
           }
         });
         
-      }, [user_id]);
+      }, [order_id]);
+
+      console.log(productName)
 
       const handleInput = (e) => {
         e.persist();
@@ -42,6 +44,7 @@ function ReviewPage()
         e.preventDefault();
         
         const review = {
+            product_id: state.product_id,
             seller_id: state.seller_id,
             firstname: state.firstname,
             middlename: state.middlename,
@@ -91,8 +94,8 @@ function ReviewPage()
                                         <div className='row'>
                                             <div className='col-md-12'>
                                                 <div className='form-group mb-3'>
-                                                <h4>{toReview.order_name}</h4>
-                                                <p>Php {toReview.order_total}.00</p>
+                                                <h4>{productName}</h4>
+                                                <p>Php {orderTotal}.00</p>
                                                 <hr></hr>
                                                 <div className="form-group mb-3">
                                                     <label>Review</label>

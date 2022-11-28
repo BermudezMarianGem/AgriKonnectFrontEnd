@@ -6,46 +6,16 @@ import loginpic from '../pages/images/login.png';
 
 const Register = () => {
 
-    /*const [firstname, setFirstname]=useState("")
-    const [middlename, setMiddlename]=useState("")
-    const [lastname, setLastname]=useState("")
-    const [username, setUsername]=useState("")
-    const [mobilephone, setPhone]=useState("")
-    const [email, setEmail]=useState("")
-    const [orgName, setOrgname]=useState("")
-    const [password, setPassword]=useState("")
-    const [verified, setVerified] = useState('false');
-    const history = useNavigate();
-
-    async function signUp()
-    {
-        let item={firstname, middlename, lastname, username, mobilephone, email, orgName, password, verified}
-        console.warn(item)
-
-        let result = await fetch("http://localhost:8000/api/register",
-        {
-            method: 'POST',
-            body: JSON.stringify(item),
-            headers:{
-                "Content-Type": 'application/json',
-                "Accept": 'application/json',
-            }
-        })
-        
-        result = await result.json()
-        localStorage.setItem("user-info", JSON.stringify(result));
-        history("/login-seller")
-    }*/
     const history = useNavigate();
     const [userInput, setUser] = useState({
       firstname: '',
       middlename: '',
       lastname: '',
       username: '',
-      orgName: '',
       email: '',
       mobilephone: '',
       password: '',
+      shippingfee: '',
       verified: 'false',
     });
 
@@ -70,9 +40,10 @@ const Register = () => {
       formData.append('middlename', userInput.middlename);
       formData.append('lastname', userInput.lastname);
       formData.append('username', userInput.username);
-      formData.append('orgName', userInput.orgName);
       formData.append('mobilephone', userInput.mobilephone);
+      formData.append('email', userInput.email);
       formData.append('password', userInput.password);
+      formData.append('shippingfee', userInput.shippingfee);
       formData.append('verified', userInput.verified);
 
 
@@ -142,27 +113,24 @@ const Register = () => {
               <br></br>
               <div className="container">
                 <div className="material-textfield">
-                  <select name="orgName" id="orgName" onChange={handleInput} value={userInput.orgName} className="form-control">
-                      <option value="default" selected hidden>Select your Organization</option>
-                      <option value = "Tayabas Manananim">Tayabas Manananim</option>
-                      <option value = "KASAMA PGT">KASAMA PGT</option>
-                      <option value = "Tayabas Group of Plants">Tayabas Group of Plants</option>
-                  </select>
-                  <small className='text-danger'>{errorList.orgName}</small>
+                  <input placeholder=" " name="image" onChange={handleImage} type="file"/>
+                  <label>Upload picture of you with any valid ID beside you</label>
+                  <small className='text-danger'>{errorList.image}</small>
                 </div>
               </div>
               <br></br>
               <div className="container">
                 <div className="material-textfield">
-                  <input placeholder=" " name="image" onChange={handleImage} type="file"/>
-                  <label>Upload proof of your organization</label>
-                  <small className='text-danger'>{errorList.image}</small>
+                  <input placeholder=" " name="email" onChange={handleInput} value={userInput.email} type="text"/>
+                  <label>Email</label>
                 </div>
               </div>
+              <br></br>
               <div className="container">
                 <div className="material-textfield">
-                  <input placeholder=" " name="email" onChange={handleInput} value={userInput.email} type="text"/>
-                  <label>Email (Optional)</label>
+                  <input placeholder="Enter your standard shipping fee" name="shippingfee" onChange={handleInput} value={userInput.shippingfee} type="text"/>
+                  <label>Shipping Fee</label>
+                  <small className='text-danger'>{errorList.shippingfee}</small>
                 </div>
               </div>
               <br></br>

@@ -8,7 +8,7 @@ function OngoingPage()
     const location = useLocation();
     const state = location.state;
     const [loading, setLoading] = useState(true);
-    const [toShip, setToShip] = useState(state);
+    const [toShip, setToShip] = useState();
 
     let user = JSON.parse(localStorage.getItem('user-info'))
     const user_id = user.id;

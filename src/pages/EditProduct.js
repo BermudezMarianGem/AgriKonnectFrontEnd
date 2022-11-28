@@ -64,7 +64,7 @@ const EditProduct = ({productdata}) => {
         <div>
             <div className="container">
                 <div className="row justify-content-center">
-                    <div className="col-md-6">
+                    <div className="col-md-12">
                         <div className="card">
                             <div className="card-header">
                                 <h4>Edit Products 
@@ -74,7 +74,7 @@ const EditProduct = ({productdata}) => {
                             <div className="card-body">
                                 
                                 <form onSubmit={(e) => updateProduct(e)} >
-                                    <div className="form-group mb-3">
+                                    <div className="form-group mb-12">
                                         <label>Product Category</label>
                                         <select type="text" id="category" name="category" onChange={(e) => handleInput(e)} defaultValue={productInput.category} className="form-control">
                                             <option value="default" selected hidden>Select Category</option>

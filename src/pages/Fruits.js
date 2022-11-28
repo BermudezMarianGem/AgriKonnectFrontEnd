@@ -36,6 +36,7 @@ function FruitPages()
                     <div className='col-md-3' key={idx}>
                         <div className='card'>
                             <div className='card-body'>
+                            <h6><img src={`http://localhost:8000/${item.image}`} width="120px" alt={item.image}/></h6>
                                 <Link to={`/fruits/${item.name}`} state={item}>
                                 <h5>{item.name}</h5>
                                 </Link>

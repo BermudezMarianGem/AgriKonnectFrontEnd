@@ -1,11 +1,12 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
 import NavbarCustomer from './NavbarCustomer';
 
 function ToReceivedPage() 
 {
+    const history = useNavigate();
     const location = useLocation();
     const state = location.state;
     const [loading, setLoading] = useState(true);
@@ -34,13 +35,14 @@ function ToReceivedPage()
         e.preventDefault();
 
         const delivered = {
+            product_id: itemDelivered.product_id,
             seller_id: itemDelivered.seller_id,
-            customer_id: itemDelivered.customer_id,
+            customerId: itemDelivered.customerId,
             order_id: itemDelivered.order_id,
             order_name: itemDelivered.order_name,
             order_qty: itemDelivered.order_qty,
             order_price: itemDelivered.order_price,
-            order_total: itemDelivered.order_price,
+            order_total: itemDelivered.order_total,
             firstname: itemDelivered.firstname,
             middlename: itemDelivered.middlename,
             lastname: itemDelivered.lastname,
@@ -54,6 +56,7 @@ function ToReceivedPage()
             if(res.data.status === 200)
             {
                 swal("Order Delivered", res.data.message, "Success")
+                history('/toReview')
             }
          });
     }
@@ -74,7 +77,7 @@ function ToReceivedPage()
                             <h6>{item.order_name}</h6>
                             <h6>Price: Php {item.order_price}.00</h6>
                             <h6>Quantity: {item.order_qty}kg</h6>
-                            <h6>Total Price: Php {item.order_price}.00</h6>
+                            <h6>Total Price: Php {item.order_total}.00</h6>
                             <h6><button type="submit" className='btn btn-primary w-100'>Delivered</button></h6>
                         </div>
                     </div>

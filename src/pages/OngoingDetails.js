@@ -6,6 +6,7 @@ import Sidebars from './Sidebars';
 
 function OngoingDetails(props) 
 {
+    const history = useNavigate();
     const location = useLocation();
     const state = location.state;
     const [loading, setLoading] = useState(true);
@@ -28,8 +29,9 @@ function OngoingDetails(props)
         e.preventDefault();
 
         const outfordelivery = {
+            product_id: state.product_id,
             seller_id: state.seller_id,
-            customer_id: state.customer_id,
+            customerId: state.customerId,
             order_id: state.order_id,
             order_name: state.order_name,
             order_qty: state.order_qty,
@@ -48,6 +50,7 @@ function OngoingDetails(props)
             if(res.data.status === 200)
             {
                 swal("Order is out for Delivery", res.data.message, "Success")
+                history('/to-ship');
             }
          });
       }
@@ -56,37 +59,7 @@ function OngoingDetails(props)
         {
             return <h4>Loading Delivery Orders...</h4>
         }
-            /*var showOrderDetails = "";
-            showOrderDetails = orders.map( (item, idx) => {
-                return(
-                    <div className='col-md-12' key={idx}>
-                        <h1>Transaction Details</h1>
-                        <div className='card'>
-                            <div className='card-body'>
-                                <h3>Product Order</h3>
-                                <h5>{productName}</h5>
-                            </div>
-                        </div>
-                        <br></br>
-                        <div className='card'>
-                            <div className='card-body'>
-                                <h3>Shipping Address</h3>
-                                <h5>{item.firstname} {item.middlename} {item.lastname}</h5>
-                                <h5>{item.mobilephone}</h5>
-                                <h5>{item.shippingaddress}</h5>
-                            </div>
-                        </div>
-                        <br></br>
-                        <div className='card'>
-                            <div className='card-body'>
-                                <h3>Mode of Payment</h3>
-                                <h5>{item.modeofpayment}</h5>
-                            </div>
-                        </div>
-
-                    </div>
-                )
-            });*/
+        
             var toShipOrder_HTMLTABLE = "";
        
             toShipOrder_HTMLTABLE = toShip.map( (item, index) => {

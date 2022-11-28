@@ -60,7 +60,7 @@ const CustomerHomepage = () =>
             </div>
             <div>
                 <h1>Best Seller</h1>
-                <h1>Recommended</h1>
+                
             </div>
         </div>
         </>

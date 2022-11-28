@@ -41,7 +41,7 @@ function ToReviewPage()
                         <td>{item.order_name}</td>
                         <td>{item.order_qty}</td>
                         <td>{item.order_total}.00</td>
-                        <Link to={`/to-review/${item.order_id}`} state={item} className="btn btn-primary">
+                        <Link to={`/to-review-item/${item.order_id}`} state={item} className="btn btn-primary">
                             <h5>Review</h5>
                         </Link>
                     </tr>

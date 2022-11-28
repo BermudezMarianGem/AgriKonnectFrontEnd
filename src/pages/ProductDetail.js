@@ -18,7 +18,9 @@ function ProductDetails()
     const fruits = {
       user_id: state.user_id,
       name: state.name,
+      product_id: product_id,
       seller_name: state.seller_name,
+      image: state.image,
       description: state.description,
       price: state.price,
       quantity: state.quantity,
@@ -64,6 +66,7 @@ function ProductDetails()
       e.preventDefault();
       
       const data = {
+        product_id: product_id,
         seller_id: state.user_id,
         fruits_id: state.id,
         fruits_qty: value,  
@@ -140,6 +143,7 @@ function ProductDetails()
           <div className='row'>
             <h4>Fruits Section</h4>
             <div className='col-md-8'>
+            <h6><img src={`http://localhost:8000/${fruits.image}`} width="120px" alt={fruits.image}/></h6>
               <h4>{fruits.name}</h4><p>by AgriKonnect</p>
               <p>Category: {fruits.category}</p>
               <p>Growing Method: {fruits.description}</p>

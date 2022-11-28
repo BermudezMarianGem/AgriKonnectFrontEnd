@@ -4,7 +4,10 @@ import axios from 'axios';
 import swal from 'sweetalert';
 
 
-function AddProduct() {
+const AddProduct = () => {
+
+
+    let user = JSON.parse(localStorage.getItem('user-info'))
 
     const history = useNavigate();
     const [productInput, setProduct] = useState({
@@ -17,44 +20,54 @@ function AddProduct() {
         error_list: [],
     });
 
+    console.log(user)
+
+    const [productImage, setImage] = useState([]);
+
     const handleInput = (e) => {
         e.persist();
         setProduct({...productInput, [e.target.name]: e.target.value })
     }
 
+    const handleImage = (e) => {
+        setImage({image:e.target.files[0]});
+      }
+  
+
     const saveProduct = (e) => {
         e.preventDefault();
         
-        const data = {
+        /*const data = {
             category:productInput.category,
             name:productInput.name,
-            seller_name:JSON.parse(localStorage.getItem('user')).firstname,
+            seller_name: user.firstname,
             description:productInput.description,
             price:productInput.price,
             quantity:productInput.quantity,
-            userId:JSON.parse(localStorage.getItem('user')).id
+            userId:user.id
         }
+        console.log(data);*/
 
-        console.log(data);
+        const formData = new FormData();
+        formData.append('image', productImage.image);
+        formData.append('category', productInput.category);
+        formData.append('name', productInput.name);
+        formData.append('seller_name', user.firstname);
+        formData.append('description', productInput.description);
+        formData.append('price', productInput.price);
+        formData.append('quantity', productInput.quantity);
+        formData.append('user_id', user.id);
 
-        axios.post(`http://localhost:8000/api/products`, data).then(res => {
+        axios.post(`http://localhost:8000/api/products`, formData).then(res => {
 
             if(res.data.status === 200)
             {
                 swal("Success!",res.data.message,"success");
-                setProduct({
-                    category:'',
-                    name: '',
-                    description: '',
-                    price: '',
-                    quantity: '',
-                    error_list: [],
-                });
                 history('/products');
             }
             else if(res.data.status === 422)
             {
-                setProduct({...productInput, error_list: res.data.validate_err });
+                swal('All fields are required', 'error');
             }
         });
     }
@@ -73,6 +86,12 @@ function AddProduct() {
                             <div className="card-body">
                                 
                                 <form onSubmit={saveProduct} >
+                                <div className="container">
+                                    <div className="material-textfield">
+                                    <input placeholder=" " name="image" onChange={handleImage} type="file"/>
+                                    <label>Upload proof of your organization</label>
+                                    </div>
+                                </div>
                                     <div className="form-group mb-3">
                                         <label>Product Category</label>
                                         <select type="text" id="category" name="category" onChange={handleInput} defaultValue={productInput.category} className="form-control">

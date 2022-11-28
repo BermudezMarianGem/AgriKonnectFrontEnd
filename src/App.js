@@ -47,6 +47,8 @@ import DeliveryPage from './pages/Delivery';
 import ToReviewPage from './pages/ToReview';
 import ReviewPage from './pages/Review';
 import OrderReviewPage from './pages/OrderReview';
+import UnverifiedTable from './pages/UnverifiedSeller';
+import VerifiedTable from './pages/VerifiedSeller';
 
 
 function App() 
@@ -65,6 +67,8 @@ function App()
 
             <Route path="/adminlogin" element={<LoginAdmin/>}/>
             <Route path="/admin-dashboard" element={<AdminTable/>}/>
+            <Route path="/unverified" element={<UnverifiedTable/>}/>
+            <Route path="/verified" element={<VerifiedTable/>}/>
             <Route path="/edit-verification/:id" element={<EditSeller/>}/>
 
             <Route path="/login-customer" element={<LoginCustomer/>} />
@@ -85,7 +89,7 @@ function App()
             <Route path="/toReceive" element={<ToReceivedPage/>}/>
             <Route path="/delivered" element={<DeliveryPage/>}/>
             <Route path="/toReview" element={<ToReviewPage/>}/>
-            <Route path="/to-review/:id" element={<ReviewPage/>}/>
+            <Route path="/to-review-item/:id" element={<ReviewPage/>}/>
             <Route path="/order-review/:id" element={<OrderReviewPage/>}/>
             
             <Route path="/customer-account" element={<CustomerAccount/>} />
@@ -101,7 +105,7 @@ function App()
             <Route path="/order-details/:id" element={<OrderDetails/>}/>
             <Route path="/products" element={<ViewProduct/>} />
             <Route path="/add-product" element={<AddProduct/>} />
-            <Route path="/edit-product" element={<EditProduct/>} />
+            <Route path="/edit-product/:id" element={<EditProduct/>} />
           </Routes>
     </div>
   );

@@ -1,17 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router';
-import { Link } from 'react-router-dom';
 import NavbarCustomer from './NavbarCustomer';
 
 
 function ToPay() 
 {
-    const location = useLocation();
-    const state = location.state;
     const [customer, setCustomer] = useState({});
     const [loading, setLoading] = useState(true);
-    const [toPay, setToPay] = useState(state);
+    const [toPay, setToPay] = useState([]);
 
     useEffect(() => {
         if (Object.keys(customer).length === 0) {
@@ -33,8 +29,9 @@ function ToPay()
           return <h4>Loading Basket...</h4>
       }
       
-    
-       var showToPayList = "";
+      if(toPay.length > 0)
+      {
+        var showToPayList = "";
         showToPayList = toPay.map( (item, idx) => {
             return(
                 <div className='col-md-12' key={idx}>
@@ -44,12 +41,23 @@ function ToPay()
                             <h6>Price: Php {item.price}.00</h6>
                             <h6>Quantity: {item.qty}kg</h6>
                             <h6>Total Price: Php {item.total_price}.00</h6>
-                            <h6>Pending..</h6>
+                            <hr></hr>
+                            <h6>Product Status: Pending..</h6>
                         </div>
                     </div>
                 </div>
             )
         })
+      }
+      else {
+        showToPayList =<div>
+            <div className='card card-body py05 text-center shadow-sm'>
+            <h4></h4>
+            <h6>No Available transaction</h6>
+        </div>
+    </div>
+    }
+    
 
     
 

@@ -29,6 +29,7 @@ function Checkout()
 
     const cart_id = state.id;
     const data = {
+        
         item_id: state.id,
         seller_id: state.seller_id,
         name: state.name,
@@ -62,6 +63,7 @@ function Checkout()
         const orders = {
             cart_id: state.id,
             seller_id: state.seller_id,
+            product_id: state.product_id,
             firstname:JSON.parse(localStorage.getItem('customer')).firstname,
             middlename:JSON.parse(localStorage.getItem('customer')).middlename,
             lastname:JSON.parse(localStorage.getItem('customer')).lastname,

@@ -10,7 +10,7 @@ function OrderDetails(props)
     const state = location.state;
     const history = useNavigate();
     const [loading, setLoading] = useState(true);
-    const [orders, setOrders] = useState(state);
+    const [orders, setOrders] = useState([]);
     const [orderItem, setItems] = useState([]);
 
     const order_id = state.order_id;
@@ -36,6 +36,7 @@ function OrderDetails(props)
         e.preventDefault();
 
         const approvedOrders = {
+            product_id: state.product_id,
             seller_id: state.seller_id,
             customer_id: state.user_id,
             order_id: state.order_id,
@@ -58,6 +59,7 @@ function OrderDetails(props)
             if(res.data.status === 200)
             {
                 swal("Order Approved!!", res.data.message, "Success")
+                history('/to-ship');
             }
          });
       }
@@ -65,37 +67,9 @@ function OrderDetails(props)
         {
             return <h4>Loading Order Details Data...</h4>
         }
-            /*var showOrderDetails = "";
-            showOrderDetails = orders.map( (item, idx) => {
-                return(
-                    <div className='col-md-12' key={idx}>
-                        <h1>Transaction Details</h1>
-                        <div className='card'>
-                            <div className='card-body'>
-                                <h3>Product Order</h3>
-                                <h5>{productName}</h5>
-                            </div>
-                        </div>
-                        <br></br>
-                        <div className='card'>
-                            <div className='card-body'>
-                                <h3>Shipping Address</h3>
-                                <h5>{item.firstname} {item.middlename} {item.lastname}</h5>
-                                <h5>{item.mobilephone}</h5>
-                                <h5>{item.shippingaddress}</h5>
-                            </div>
-                        </div>
-                        <br></br>
-                        <div className='card'>
-                            <div className='card-body'>
-                                <h3>Mode of Payment</h3>
-                                <h5>{item.modeofpayment}</h5>
-                            </div>
-                        </div>
 
-                    </div>
-                )
-            });*/
+        if(orders.length > 0)
+        {
             var orderDetails_HTMLTABLE = "";
        
             orderDetails_HTMLTABLE = orders.map( (item, index) => {
@@ -125,6 +99,24 @@ function OrderDetails(props)
                     </tr>
                 );
             });
+        }
+
+        else {
+            orderDetails_HTMLTABLE =<div>
+                <div className='card card-body py05 text-center shadow-sm'>
+                    <h4></h4>
+                    <h6>No Available transaction</h6>
+                </div>
+            </div>
+
+            orderInfo_HTMLTABLE =<div>
+            <div className='card card-body py05 text-center shadow-sm'>
+                <h4></h4>
+                <h6>No Available transaction</h6>
+            </div>
+            </div>
+        }
+            
            
 
     return (

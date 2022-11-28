@@ -5,42 +5,39 @@ import { Link } from 'react-router-dom';
 import swal from 'sweetalert';
 import NavbarCustomer from './NavbarCustomer';
 
-function VegetableDetails()
+function VegetableDetails(props)
 {
-    let user = JSON.parse(localStorage.getItem('user-info'))
-    localStorage.setItem('user', JSON.stringify(user))
-
     const location = useLocation();
     const state = location.state;
-    const [data, setData] = useState(state);
+    const [review, setReview] = useState([]);
     const [loading, setLoading] = useState(true);
     const [value, setQuantity] = useState(1);
 
     const product_id = state.id;
-    const vege = {
-      user_id: state.user_id,
-      name: state.name,
-      seller_name: state.seller_name,
-      description: state.description,
-      price: state.price,
-      quantity: state.quantity,
-      category: state.category,
-    }
-    //let x = vege.user_id;
-    
-    useEffect(() => {
-        axios.get(`http://localhost:8000/api/viewvegetable/${product_id}`, vege).then((res) => {
-          if (res.status === 200) {
-            setData(res.data.products);
-            setLoading(false);
-          }
-        });
-        console.log(data)
-        
-      },);
 
-      //global.uid = vege.user_id;
-      //global.name = vege.name
+    const name = state.name;
+    const image = state.image;
+    const seller = state.seller_name;
+    const description = state.description;
+    const price = state.price;
+    const category = state.category;
+
+    useEffect(() => {
+
+        axios.get(`http://localhost:8000/api/viewvegetable/${product_id}`).then((res) => {
+          if (res.status === 200) {
+            
+            setReview(res.data.reviews[0]);
+            setLoading(false);
+    
+          }
+          console.log(res.data.reviews)
+
+        });
+        
+      },[product_id]);
+
+      
 
       const handleDecrement = () => {
         if(value > 1)
@@ -61,6 +58,7 @@ function VegetableDetails()
         e.preventDefault();
   
         const data = {
+          product_id: product_id,
           seller_id: state.user_id,
           fruits_id: state.id,
           fruits_qty: value,  
@@ -110,13 +108,14 @@ function VegetableDetails()
           <div className='row'>
             <h4>Vegetable Section</h4>
             <div className='col-md-8'>
-              <h4>{vege.name}<p>by AgriKonnect</p></h4>
-              <p>Category: {vege.category}</p>
-              <p>Growing Method: {vege.description}</p>
-              <p>Price: {vege.price} </p>
+              <h6><img src={`http://localhost:8000/${image}`} width="120px" alt={image}/></h6>
+              <h4>{name}<p>by AgriKonnect</p></h4>
+              <p>Category: {category}</p>
+              <p>Growing Method: {description}</p>
+              <p>Price: {price} </p>
               <p>Quantity: {value}</p>
               <div>
-                <p>Seller: {vege.seller_name}</p>
+                <p>Seller: {seller}</p>
               </div>
             </div>
 
@@ -137,7 +136,22 @@ function VegetableDetails()
             </div>
           </div>
         </div>
-      </div>
+        <div className='card'>
+          <div className='card-body'>
+              <div className='row'>
+                  <div className='col-md-12'>
+                      <div className='form-group mb-3'>
+                        <h4>Reviews</h4>
+                        <hr></hr> 
+                        <h6>Product Name: {review?.order_name}</h6>
+                        <h6>Name: {review?.firstname} {review?.middlename} {review?.lastname}</h6>
+                        <h6>Review: {review?.review}</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
       </form>
       
       </>

@@ -58,14 +58,15 @@ function ViewProduct({userData}) {
                 <div className='col-md-20' key={idx}>
                     <div className='card'>
                         <div className='card-body'>
-                            <h6>{item.id}</h6>
+  
+                            <h6><img src={`http://localhost:8000/${item.image}`} width="120px" alt={item.image}/></h6>
                             <h6>{item.category}</h6>
                             <h6>{item.name}</h6>
                             <h6>{item.description}</h6>
                             <h6>{item.price}</h6>
                             <h6>{item.quantity}</h6>
                         </div>
-                        <Link to={"/edit-product"} state={item} className="btn btn-success btn-sm">Edit</Link>
+                        <Link to={`/edit-product/${item.id}`} state={item} className="btn btn-success btn-sm">Edit</Link>
                         <button type="button" onClick={(e) => deleteProduct(e, item.id)} className="btn btn-danger btn-sm">Delete</button>
                     </div>
                 </div>

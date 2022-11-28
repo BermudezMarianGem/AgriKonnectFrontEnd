@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import NavbarCustomer from './NavbarCustomer';
+
 function VegetablePage()
 {
     const [data, setData] = useState('');
@@ -38,6 +39,7 @@ function VegetablePage()
                     <div className='col-md-3' key={idx}>
                         <div className='card'>
                             <div className='card-body'>
+                            <h6><img src={`http://localhost:8000/${item.image}`} width="120px" alt={item.image}/></h6>
                                 <Link to={`/vegetables/${item.name}`} state={item}>
                                 <h5>{item.name}</h5>
                                 </Link>
