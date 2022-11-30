@@ -10,30 +10,20 @@ function ReviewPage()
     const location = useLocation();
     const state = location.state;
     const [loading, setLoading] = useState(true);
-    const [toReview, setReview] = useState(state);
+    const [toReview, setReview] = useState([]);
 
     const order_id = state.order_id;
     const productName = state.order_name;
     const orderTotal = state.order_total;
 
+    console.log(order_id)
     const [reviewInput, setReviewInput] = useState({
         review: '',
-    })
+    });
 
     const [error, setError] = useState([]);
 
-    useEffect(() => {
-
-        axios.get(`http://localhost:8000/api/to-review-item/${order_id}`).then((res) => {
-          if (res.status === 200) {
-            setReview(res.data.delivered);
-            setLoading(false);
-          }
-        });
-        
-      }, [order_id]);
-
-      console.log(productName)
+      console.log(state)
 
       const handleInput = (e) => {
         e.persist();
@@ -43,19 +33,21 @@ function ReviewPage()
       const submitReview = (e) => {
         e.preventDefault();
         
-        const review = {
+        const reviews = {
+            customer_id: state.customerId,
             product_id: state.product_id,
             seller_id: state.seller_id,
             firstname: state.firstname,
             middlename: state.middlename,
             lastname: state.lastname,
+            order_id: order_id,
             order_name: state.order_name,
             order_qty: state.order_qty,
             order_total: state.order_total,
             review: reviewInput.review,
         }
 
-        axios.post(`http://localhost:8000/api/review`, review).then(res=> {
+        axios.post(`http://localhost:8000/api/review`, reviews).then(res=> {
             if(res.data.status === 200)
             {
                 swal("Review Submitted", res.data.message, "Success")
@@ -69,12 +61,6 @@ function ReviewPage()
             }
         });
       }
-      
-      
-      if(loading)
-        {
-            return <h4>Loading To Review Orders...</h4>
-        }
         
 
     return (

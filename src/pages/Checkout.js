@@ -14,16 +14,19 @@ function Checkout() {
   const [loading, setLoading] = useState(true);
   //const [cart, setCart] = useState(state);
 
-  console.log(state);
+  console.log(customer);
 
   const cartId = state.selectedItems[0].id;
   const sellerId = state.selectedItems[0].seller_id;
   const productId = state.selectedItems[0].product_id;
+  const productName = state.selectedItems[0].name;
+  const productQty = state.selectedItems[0].fruits_qty;
   const total_price = state.total;
+  const price = state.selectedItems[0].price;
   const shippingfee = state.shippingFee;
   const grandtotal = (state.shippingFee + state.total);
 
-  console.log(cartId)
+  console.log(price)
   const [checkoutInput, setCheckoutInput] = useState({
     shippingaddress: "",
     mobilephone: "",
@@ -58,17 +61,23 @@ function Checkout() {
     const orders = {
       cart_id: cartId,
       seller_id: sellerId,
+      order_name: productName,
+      price: price,
       product_id: productId,
+      product_qty: productQty,
       shippingfee: shippingfee,
       total_price: grandtotal,
-      firstname: JSON.parse(localStorage.getItem("customer")).firstname,
-      middlename: JSON.parse(localStorage.getItem("customer")).middlename,
-      lastname: JSON.parse(localStorage.getItem("customer")).lastname,
+      firstname: customer.firstname,
+      middlename: customer.middlename,
+      lastname: customer.lastname,
       shippingaddress: checkoutInput.shippingaddress,
       mobilephone: checkoutInput.mobilephone,
       modeofpayment: checkoutInput.modeofpayment,
-      customerId: JSON.parse(localStorage.getItem("customer")).id,
+      customerId: customer.id,
+
     };
+
+    console.log(orders)
 
 
     axios.post(`http://localhost:8000/api/place-order`, orders).then((res) => {

@@ -5,13 +5,13 @@ import Sidebars from './Sidebars';
 
 function DeliveryPage() 
 {
-    const location = useLocation();
-    const state = location.state;
     const [loading, setLoading] = useState(true);
-    const [delivered, setDelivered] = useState(state);
+    const [delivered, setDelivered] = useState([]);
 
     let user = JSON.parse(localStorage.getItem('user-info'))
     const user_id = user.id;
+
+    console.log(delivered)
 
     useEffect(() => {
 
@@ -24,7 +24,6 @@ function DeliveryPage()
         
       }, [user_id]);
       
-      console.log(delivered)
       
       if(loading)
         {
@@ -41,9 +40,6 @@ function DeliveryPage()
                         <td>{item.order_name}</td>
                         <td>{item.order_qty}</td>
                         <td>{item.order_total}.00</td>
-                        <Link to={`/order-review/${item.order_id}`} state={item} className="btn btn-primary">
-                                <h5>Review</h5>
-                            </Link>
                     </tr>
                 )
             });
@@ -77,7 +73,6 @@ function DeliveryPage()
                                     <th>Product Name</th>
                                     <th>Quantity (kg) </th>
                                     <th>Total Price</th>
-                                    <th>Review</th>
                                 </tr>
                             </thead>
                             <tbody>

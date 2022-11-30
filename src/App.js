@@ -49,6 +49,9 @@ import ReviewPage from './pages/Review';
 import OrderReviewPage from './pages/OrderReview';
 import UnverifiedTable from './pages/UnverifiedSeller';
 import VerifiedTable from './pages/VerifiedSeller';
+import CustomerReviewPage from './pages/CustomerReviewPage';
+import CustomerRecentPage from './pages/CustomerRecentTransaction';
+
 
 
 function App() 
@@ -90,6 +93,8 @@ function App()
             <Route path="/toReview" element={<ToReviewPage/>}/>
             <Route path="/to-review-item/:id" element={<ReviewPage/>}/>
             <Route path="/order-review/:id" element={<OrderReviewPage/>}/>
+            <Route path="/customer-review" element={<CustomerReviewPage/>}/>
+            <Route path="/customer-recent" element={<CustomerRecentPage/>}/>
             
             <Route path="/customer-account" element={<CustomerAccount/>} />
             <Route path="/edit-customeraccount" element={<EditCustomerAccount/>} />

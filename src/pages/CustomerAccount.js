@@ -39,9 +39,8 @@ function CustomerAccount()
                 </div>
 
                 <div>
-                    <Link to={'/'} className="btn btn-primary btn-sm float-start">Recent Transaction</Link>
-                    <Link to={'/'} className="btn btn-primary btn-sm float-start">Coupons/Discount</Link>
-                    <Link to={'/'} className="btn btn-primary btn-sm float-start"> Review Orders</Link>
+                    <Link to={'/customer-recent'} className="btn btn-primary btn-sm float-start">Recent Transaction</Link>
+                    <Link to={'/customer-review'} className="btn btn-primary btn-sm float-start"> Review Orders</Link>
                     <button className='btn btn-primary' onClick={logoutCustomer}>Logout</button>
                 </div>
                 
