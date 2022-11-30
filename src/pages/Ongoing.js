@@ -1,23 +1,22 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Sidebars from './Sidebars';
 
 function OngoingPage() 
 {
-    const location = useLocation();
-    const state = location.state;
     const [loading, setLoading] = useState(true);
     const [toShip, setToShip] = useState();
 
     let user = JSON.parse(localStorage.getItem('user-info'))
     const user_id = user.id;
 
+    console.log(user_id)
     useEffect(() => {
 
-        axios.get(`http://localhost:8000/api/ongoing-order/${user_id}`).then((res) => {
+        axios.get(`http://localhost:8000/api/ongoing/${user_id}`).then((res) => {
           if (res.status === 200) {
-            setToShip(res.data.ongoing);
+            setToShip(res.data.deliveries);
             setLoading(false);
           }
         });
@@ -37,14 +36,17 @@ function OngoingPage()
             showOngoingOrders = toShip.map( (item, idx) => {
                 return(
                     <tr key={idx}>
-                        <td>{item.order_id}</td>
-                        <td>{item.order_name}</td>
-                        <td>{item.order_qty}</td>
-                        <td>{item.order_total}.00</td>
-                        <Link to={`/to-ship-details/${item.order_id}`} state={item} className="btn btn-primary">
-                                <h5>View Product Details</h5>
-                                </Link>
-                    </tr>
+                    <td>{item.order_id}</td>
+                    <td>{item.order_name}</td>
+                    <td>{item.order_qty}</td>
+                    <td>{item.order_price}.00</td>
+                    <td>{item.order_total}.00</td>
+                    <td>{item.firstname} {item.middlename} {item.lastname}</td>
+                    <td>{item.contactNo}</td>
+                    <td>{item.shippingaddress}</td>
+                    <td>{item.modeofpayment}</td>
+                    <td>Pending....</td>
+                </tr>
                 )
             });
 
@@ -76,7 +78,13 @@ function OngoingPage()
                                     <th>Order ID</th>
                                     <th>Product Name</th>
                                     <th>Quantity (kg) </th>
+                                    <th>Unit Price</th>
                                     <th>Total Price</th>
+                                    <th>Customer Name</th>
+                                    <th>Phone Number</th>
+                                    <th>Shipping Address</th>
+                                    <th>Mode of Payment</th>
+                                    <th>Shipping Status</th>
                                 </tr>
                             </thead>
                             <tbody>

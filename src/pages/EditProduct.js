@@ -12,7 +12,7 @@ const EditProduct = ({productdata}) => {
     const history = useNavigate();
     const [errorInput, setError] = useState([]);
     const state = location.state;
-    const [productInput, setProduct] = useState(state);
+    const [productInput, setProduct] = useState([]);
 
     const handleInput = (e) => {
         e.persist();

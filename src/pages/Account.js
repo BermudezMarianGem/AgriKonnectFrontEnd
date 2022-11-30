@@ -24,7 +24,7 @@ function AccountPage()
                 </div>
                 <Link to={'/accountview'} className="btn btn-primary btn-sm float-start">Contact Information</Link>
                 <Link to={'/edit-password'} state={user} className="btn btn-primary btn-sm float-start"> Password</Link>
-                <Link to={'/review'} className="btn btn-primary btn-sm float-start"> Review</Link>
+                <Link to={'/review-page'} className="btn btn-primary btn-sm float-start"> Review</Link>
                 <button className='btn btn-primary' onClick={logout}>Logout</button>
             </div>
         </div>

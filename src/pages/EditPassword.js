@@ -11,7 +11,7 @@ const EditPassword = () => {
     const history = useNavigate();
     const [errorInput, setError] = useState([]);
     const state = location.state;
-    const [userInput, setPassword] = useState(state);
+    const [userInput, setPassword] = useState([]);
 
     const handleInput = (e) => {
         e.persist();

@@ -31,6 +31,7 @@ import SalePage from './pages/Sale';
 import SearchProduct from './pages/SearchProduct';
 import ProductDetails from './pages/ProductDetail';
 import VegetableDetails from './pages/VegetableDetails';
+import Review from './pages/ReviewPage';
 
 //Admin Account
 import LoginAdmin from './pages/AdminLogin';
@@ -41,7 +42,6 @@ import Checkout from './pages/Checkout';
 import OrderDetails from './pages/OrderDetails';
 import ToPay from './pages/ToPay';
 import OngoingPage from './pages/Ongoing';
-import OngoingDetails from './pages/OngoingDetails';
 import ToReceivedPage from './pages/ToReceived';
 import DeliveryPage from './pages/Delivery';
 import ToReviewPage from './pages/ToReview';
@@ -85,7 +85,6 @@ function App()
             <Route path="/checkout/:id" element={<Checkout/>}/>
             <Route path="/toPay" element={<ToPay/>}/>
             <Route path="/to-ship" element={<OngoingPage/>}/>
-            <Route path="/to-ship-details/:id" element={<OngoingDetails/>}/>
             <Route path="/toReceive" element={<ToReceivedPage/>}/>
             <Route path="/delivered" element={<DeliveryPage/>}/>
             <Route path="/toReview" element={<ToReviewPage/>}/>
@@ -102,6 +101,7 @@ function App()
             <Route path="/edit-account" element={<EditAccount/>}/>
             <Route path="/edit-password" element={<EditPassword/>} />
             <Route path="/transaction" element={<TransactionPage/>} />
+            <Route path="/review-page" element={<Review/>}/>
             <Route path="/order-details/:id" element={<OrderDetails/>}/>
             <Route path="/products" element={<ViewProduct/>} />
             <Route path="/add-product" element={<AddProduct/>} />

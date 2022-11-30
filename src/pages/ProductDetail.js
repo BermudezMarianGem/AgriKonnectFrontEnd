@@ -10,7 +10,7 @@ function ProductDetails()
 
     const location = useLocation();
     const state = location.state;
-    const [data, setData] = useState(state);
+    const [data, setData] = useState();
     const [loading, setLoading] = useState(true);
     const [value, setQuantity] = useState(1);
 

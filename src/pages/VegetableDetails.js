@@ -60,7 +60,6 @@ function VegetableDetails(props)
         const data = {
           product_id: product_id,
           seller_id: state.user_id,
-          fruits_id: state.id,
           fruits_qty: value,  
           name: state.name,
           price: state.price,

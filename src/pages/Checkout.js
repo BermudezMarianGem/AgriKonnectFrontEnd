@@ -1,101 +1,105 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import NavbarCustomer from './NavbarCustomer';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import swal from 'sweetalert';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import NavbarCustomer from "./NavbarCustomer";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 
-function Checkout() 
-{
-    let customer = JSON.parse(localStorage.getItem('user-info'))
-    localStorage.setItem('customer', JSON.stringify(customer))
+function Checkout() {
+  let customer = JSON.parse(localStorage.getItem("user-info"));
+  localStorage.setItem("customer", JSON.stringify(customer));
 
-    const location = useLocation();
-    const state = location.state;
-    const history = useNavigate();
-    const [loading, setLoading] = useState(true);
-    const [cart, setCart] = useState(state);
+  const location = useLocation();
+  const state = location.state;
+  const history = useNavigate();
+  const [loading, setLoading] = useState(true);
+  //const [cart, setCart] = useState(state);
 
-    const [checkoutInput, setCheckoutInput] = useState({
-        shippingaddress: '',
-        mobilephone: '',
-        modeofpayment: '',
+  console.log(state);
 
+  const cartId = state.selectedItems[0].id;
+  const sellerId = state.selectedItems[0].seller_id;
+  const productId = state.selectedItems[0].product_id;
+  const total_price = state.total;
+  const shippingfee = state.shippingFee;
+  const grandtotal = (state.shippingFee + state.total);
+
+  console.log(cartId)
+  const [checkoutInput, setCheckoutInput] = useState({
+    shippingaddress: "",
+    mobilephone: "",
+    modeofpayment: "",
+  });
+
+  const [error, setError] = useState([]);
+  //const [orderData, setCustomer] = useState(state);
+
+  //var totalCartPrice = 0;
+
+  /*useEffect(() => {
+    axios.get(`http://127.0.0.1:8000/api/checkout/${cart_id}`).then((res) => {
+      if (res.status === 200) {
+        setCustomer(res.data.customer);
+        setCart(res.data.cart);
+        setLoading(false);
+      }
     });
+  }, [cart_id]);*/
 
-    const [error, setError] = useState([]);
-    const [orderData, setCustomer] = useState(state);
-    
-    var totalCartPrice = 0;
 
-    const cart_id = state.id;
-    const data = {
-        
-        item_id: state.id,
-        seller_id: state.seller_id,
-        name: state.name,
-        price: state.price,
-        fruits_qty: state.fruits_qty,
-    }
+  const handleInput = (e) => {
+    e.persist();
+    setCheckoutInput({ ...checkoutInput, [e.target.name]: e.target.value });
+  };
+  
 
-    useEffect(() => {
+  const submitOrder = (e) => {
+    e.preventDefault();
 
-        axios.get(`http://127.0.0.1:8000/api/checkout/${cart_id}`).then(res=>{
-            if(res.status === 200)
-            {
-                //console.log(res.data)
-                setCustomer(res.data.customer)
-                setCart(res.data.cart)
-                setLoading(false);
-            }
-        });
-      },[cart_id]);
+    const orders = {
+      cart_id: cartId,
+      seller_id: sellerId,
+      product_id: productId,
+      shippingfee: shippingfee,
+      total_price: grandtotal,
+      firstname: JSON.parse(localStorage.getItem("customer")).firstname,
+      middlename: JSON.parse(localStorage.getItem("customer")).middlename,
+      lastname: JSON.parse(localStorage.getItem("customer")).lastname,
+      shippingaddress: checkoutInput.shippingaddress,
+      mobilephone: checkoutInput.mobilephone,
+      modeofpayment: checkoutInput.modeofpayment,
+      customerId: JSON.parse(localStorage.getItem("customer")).id,
+    };
 
-      console.log(data)
 
-      const handleInput = (e) => {
-        e.persist();
-        setCheckoutInput({...checkoutInput, [e.target.name]: e.target.value});
+    axios.post(`http://localhost:8000/api/place-order`, orders).then((res) => {
+      if (res.data.status === 200) {
+        swal("Order Placed Successfully", res.data.message, "Success");
+        setError([]);
+        history("/basket");
+      } else if (res.data.status === 422) {
+        swal("All fields are mandatory", "", "error");
+        setError(res.data.errors);
       }
+    });
+  };
 
-      const submitOrder = (e) => {
-        e.preventDefault();
-
-        const orders = {
-            cart_id: state.id,
-            seller_id: state.seller_id,
-            product_id: state.product_id,
-            firstname:JSON.parse(localStorage.getItem('customer')).firstname,
-            middlename:JSON.parse(localStorage.getItem('customer')).middlename,
-            lastname:JSON.parse(localStorage.getItem('customer')).lastname,
-            shippingaddress: checkoutInput.shippingaddress,
-            mobilephone: checkoutInput.mobilephone,
-            modeofpayment: checkoutInput.modeofpayment,
-            customerId:JSON.parse(localStorage.getItem('customer')).id
-        }
-
-        console.log(orders)
-
-        axios.post(`http://localhost:8000/api/place-order`, orders).then(res=> {
-            if(res.data.status === 200)
-            {
-                swal("Order Placed Successfully", res.data.message, "Success")
-                setError([]);
-                history('/basket');
-            }
-            else if(res.data.status === 422)
-            {
-                swal("All fields are mandatory", "", "error");
-                setError(res.data.errors);
-            }
-        });
-      }
-      
-      if(loading)
-      {
-          return <h4>Loading Checkout Details...</h4>
-      }
-        totalCartPrice += data.price * data.fruits_qty;
-        /*
+  /*if (loading) {
+    return <h4>Loading Checkout Details...</h4>;
+  }*/
+  var checkOutDetails = "";
+  checkOutDetails = state.selectedItems.map( (item, idx) => {
+    return(
+      <div className="col-md-12" key={idx}>
+        <div className="card">
+          <h5>{item.name}</h5>
+          <h6>Quantity: {item.fruits_qty}</h6>
+          <h6>Price: {item.price}</h6>
+        </div>
+      </div>
+    )
+  })
+  //totalCartPrice += data.price * data.fruits_qty;
+  /*
         var showCheckOutDetails = "";
         showCheckOutDetails = cart.map( (item, idx) => {
             totalCartPrice += item.price * item.fruits_qty;
@@ -138,64 +142,101 @@ function Checkout()
                     </div>
             )
         });*/
-      
 
-    return (
-        <>
-        <NavbarCustomer/>
-        <div>
-            <h5>Checkout Details</h5>
-            <Link to ="/basket" className="btn btn-primary">Back</Link>
-            <form>
-                <div className='py-4'>
-                    <div className="container">
-                        <div className="row">
-                            <div className='col-md-12'>
-                                <div className='card'>
-                                    <div className='card-body'>
-                                        <div className='row'>
-                                            <div className='col-md-6'>
-                                                <div className='form-group mb-3'>
-                                                <h4>{data.name}</h4>
-                                                <p>Php {totalCartPrice}.00</p>
-                                                <div className="form-group mb-3">
-                                                    <label>Shipping Address</label>
-                                                    <input type="text" name="shippingaddress" onChange={handleInput} value={checkoutInput.shippingaddress}  className="form-control" placeholder='Enter Shipping Address' />
-                                                    <small className='text-danger'>{error.shippingaddress}</small>
-                                                </div>
-                                                <div className="form-group mb-3">
-                                                    <label>Select Payment Method</label>
-                                                    <select type="text" id="modeofpayment" name="modeofpayment" onChange={handleInput} value={checkoutInput.modeofpayment} className="form-control">
-                                                        <option value="default" selected hidden>Select Payment Method</option>
-                                                        <option value = "Cash on Delivery">Cash on Delivery (pay when you order)</option>
-                                                        <option value = "Online Payment">Online Payment (Gcash)</option>
-                                                    </select>
-                                                    <small className='text-danger'>{error.modeofpayment}</small>
-                                                </div>
-                                                <div className="form-group mb-3">
-                                                    <label>Mobile Phone</label>
-                                                    <input type="text" name="mobilephone" onChange={handleInput} value={checkoutInput.mobilephone}  className="form-control" placeholder='Enter Shipping Address' />
-                                                    <small className='text-danger'>{error.mobilephone}</small>
-                                                </div>
-                                                
-                                                <p>Subtotal: Php{totalCartPrice}.00</p>
-                                                <p>Subtotal: Php{totalCartPrice}.00</p>
-                                                <hr/>
-                                                <Link to ="/placeorder" className="btn btn-primary" onClick={submitOrder}>Place Order</Link>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+  return (
+    <>
+      <NavbarCustomer />
+      <div>
+        <h5>Checkout Details</h5>
+        <Link to="/basket" className="btn btn-primary">
+          Back
+        </Link>
+        <form>
+          <div className="py-4">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="card">
+                    <div className="card-body">
+                      <div className="row">
+                        <div className="col-md-6">
+                          <div className="form-group mb-3">
+                            {checkOutDetails}
+
+                            <div className="form-group mb-3">
+                              <input
+                                type="text"
+                                name="shippingaddress"
+                                onChange={handleInput}
+                                value={checkoutInput.shippingaddress}
+                                className="form-control"
+                                placeholder="Enter Shipping Address"
+                              />
+                              <small className="text-danger">
+                                {error.shippingaddress}
+                              </small>
                             </div>
+                            <div className="form-group mb-3">
+                              <select
+                                type="text"
+                                id="modeofpayment"
+                                name="modeofpayment"
+                                onChange={handleInput}
+                                value={checkoutInput.modeofpayment}
+                                className="form-control"
+                                placeholder="Choose mode of payment"
+                              >
+                                <option value="default" selected hidden>
+                                  Select Payment Method
+                                </option>
+                                <option value="Cash on Delivery">
+                                  Cash on Delivery (pay when you order)
+                                </option>
+                                <option value="Online Payment">
+                                  Online Payment (Gcash)
+                                </option>
+                              </select>
+                              <small className="text-danger">
+                                {error.modeofpayment}
+                              </small>
+                            </div>
+                            <div className="form-group mb-3">
+                              <input
+                                type="text"
+                                name="mobilephone"
+                                onChange={handleInput}
+                                value={checkoutInput.mobilephone}
+                                className="form-control"
+                                placeholder="Mobile Phone"
+                              />
+                              <small className="text-danger">
+                                {error.mobilephone}
+                              </small>
+                            </div>
+                            <p>Shipping Fee: Php {shippingfee}.00</p>
+                            <p>Subtotal: Php {total_price}.00</p>
+                            <p>Total (including shipping fee): Php {grandtotal}.00</p>
+                            <hr />
+                            <Link
+                              to="/placeorder"
+                              className="btn btn-primary"
+                              onClick={submitOrder}
+                            >
+                              Place Order
+                            </Link>
+                          </div>
                         </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
-            </form>     
-        </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     </>
-    )
-
+  );
 }
 
 export default Checkout;

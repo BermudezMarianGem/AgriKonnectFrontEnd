@@ -6,12 +6,14 @@ import NavbarCustomer from './NavbarCustomer';
 
 function FruitPages()
 {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState('');
     const [loading, setLoading] = useState(true);
+
+    const productCount = data.length;
 
     let customer = JSON.parse(localStorage.getItem('user-info'))
     localStorage.setItem('customer', JSON.stringify(customer))
-    
+
     useEffect(() => {
         axios.get(`http://localhost:8000/api/fruit`).then((res) => {
           if (res.status === 200) {
@@ -20,24 +22,24 @@ function FruitPages()
           }
         });
 
-        
       }, []);
       console.log(data)
-      
     if(loading)
     {
         return <h4>Loading Product Data...</h4>
     }
     else
     {
-        var showProductList = "";
-            showProductList = data.map( (item, idx) => {
+        var showVegetableList = "";
+        if(productCount)
+        {
+            showVegetableList = data.map( (item, idx) => {
                 return(
                     <div className='col-md-3' key={idx}>
                         <div className='card'>
                             <div className='card-body'>
                             <h6><img src={`http://localhost:8000/${item.image}`} width="120px" alt={item.image}/></h6>
-                                <Link to={`/fruits/${item.name}`} state={item}>
+                                <Link to={`/vegetables/${item.name}`} state={item}>
                                 <h5>{item.name}</h5>
                                 </Link>
                                 <hr></hr>
@@ -48,14 +50,19 @@ function FruitPages()
                     </div>
                 )
             });
-        
+        }
+        else
+        {
+            showVegetableList = <div className='col-md-12'>
+                <h4>0 Product Available</h4>
+            </div>
+        }
         /*var product_HTMLTABLE = "";
        
         product_HTMLTABLE = data.map( (item, index) => {
             return (
             
                 <tr key={index}>
-      
                     <td>{item.name}</td>
                     <td>{item.description}</td>
                     <td>{item.price}</td>
@@ -98,20 +105,6 @@ function FruitPages()
                                 </div>
                             </div>
                         </div>
-                        <div className='col-md-2'>
-                            <div className='card'>
-                                <div className='card-body'>
-                                    <Link to={"/sales"}className="card-text">Sale</Link>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='col-md-2'>
-                            <div className='card'>
-                                <div className='card-body'>
-                                    <Link to={"/freedelivery"}className="card-text">Free Delivery</Link>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                 </div>
@@ -119,13 +112,13 @@ function FruitPages()
             </div>
             <div>
             
-            <h1>Fruit Section</h1>
+            <h1>Vegetable Section</h1>
 
             <div className="card-body">
                                 
                 <div className='py-3'>
                     <div className='row'>
-                        {showProductList}
+                        {showVegetableList}
                     </div>
 
                 </div>
@@ -133,6 +126,7 @@ function FruitPages()
         </div>
             
         </div>
+        
         </>
     );
 }

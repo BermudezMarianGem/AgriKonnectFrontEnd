@@ -1,52 +1,63 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import NavbarCustomer from "./NavbarCustomer";
 
 function SearchProduct() {
 
     const [table, setTable] = useState(null);
+    let customer = JSON.parse(localStorage.getItem('user-info'))
+    localStorage.setItem('customer', JSON.stringify(customer))
 
+    
     async function search(key) {
         console.warn(key)
         let result = await fetch("http://localhost:8000/api/search/"+key);
         console.log(result);
         result = await result.json();
-    
-        var product_HTMLTABLE = result.map((item, index) => {
-          return (
-            <tr key={index}>
-              <td>{item.name}</td>
-              <td>{item.category}</td>
-              <td>{item.description}</td>
-              <td>{item.price}</td>
-            </tr>
-          );
+ 
+        var productList = result.map((item, index) => {
+            return(
+                <div className='col-md-3' key={index}>
+                    <div className='card'>
+                        <div className='card-body'>
+                        <h6><img src={`http://localhost:8000/${item.image}`} width="120px" alt={item.image}/></h6>
+                            <Link to={`/vegetables/${item.name}`} state={item}>
+                            <h5>{item.name}</h5>
+                            </Link>
+                            <hr></hr>
+                            <p>Price: Php {item.price}.00</p>
+                            <p>Seller: {item.seller_name}</p>
+                        </div>
+                    </div>
+                </div>
+            );
         });
-        setTable(product_HTMLTABLE)
+        setTable(productList)
 
     }
 
     return (
         <div>
             <NavbarCustomer />
-            <div className="col-sm-6 offset-sm-3">
-                <h1>Search Product</h1>
-                <br/>
-                <input type='text' onChange={(e)=>search(e.target.value)} className="form-control" placeholder="Search Product" />
+            <div className='page-content-wrapper'>
+               
+            <div className="container-fluid">
+                <h1 className="mt-4">Welcome { customer.firstname} </h1>
+                <p>What would you buy today?</p>
             </div>
-            <div className="col-sm-6 offset-sm-3">
-                <table className="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                    </tr>
-                </thead>
-                <tbody>{table}</tbody>
-                </table>
+            <div className="input-group rounded">
+                <input type='text' onChange={(e)=>search(e.target.value)} className="form-control" placeholder="Search Product" /><Link to={"/basket"} className="btn btn-primary">Basket</Link>
+            </div><br/>
+            <div>
+            <div className='card'>
+                <div className='card-body'>
+                    <h4>Result</h4>
+                {table}
+                </div>
             </div>
         </div>
+    </div>
+    </div>
     )
 }
 

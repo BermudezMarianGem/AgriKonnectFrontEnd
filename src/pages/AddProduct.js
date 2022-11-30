@@ -89,7 +89,7 @@ const AddProduct = () => {
                                 <div className="container">
                                     <div className="material-textfield">
                                     <input placeholder=" " name="image" onChange={handleImage} type="file"/>
-                                    <label>Upload proof of your organization</label>
+                                    <label>Upload product image</label>
                                     </div>
                                 </div>
                                     <div className="form-group mb-3">

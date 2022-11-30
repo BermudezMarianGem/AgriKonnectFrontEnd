@@ -39,20 +39,6 @@ const CustomerHomepage = () =>
                                 </div>
                             </div>
                         </div>
-                        <div className='col-md-2'>
-                            <div className='card'>
-                                <div className='card-body'>
-                                    <Link to={"/sales"}className="card-text">Sale</Link>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='col-md-2'>
-                            <div className='card'>
-                                <div className='card-body'>
-                                    <Link to={"/freedelivery"}className="card-text">Free Delivery</Link>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                 </div>
