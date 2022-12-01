@@ -22,6 +22,24 @@ const CustomerHomepage = () =>
 
       },[]);
 
+      var recommendedProduct = "";
+
+      recommendedProduct = data.map((item, idx) => {
+        return(
+            <div className='col-md-3' key={idx}>
+                <div className='card'>
+                    <div className='card-body'>
+                        <Link to={`/vegetables/${item.order_name}`} state={item}>
+                        <h5>{item.order_name}</h5>
+                        </Link>
+                        <hr></hr>
+                        <p>Price: Php {item.order_price}.00</p>
+                    </div>
+                </div>
+            </div>
+        )
+      })
+
     return(
         <>
         <NavbarCustomer/>
@@ -60,8 +78,8 @@ const CustomerHomepage = () =>
             </div>
             </div>
             <div>
-                <h1>Best Seller</h1>
-                
+                <h1>Recommended Products</h1>
+                {recommendedProduct}
             </div>
         </div>
         </>

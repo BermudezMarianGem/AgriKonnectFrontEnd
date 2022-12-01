@@ -52,6 +52,7 @@ import VerifiedTable from './pages/VerifiedSeller';
 import CustomerReviewPage from './pages/CustomerReviewPage';
 import CustomerRecentPage from './pages/CustomerRecentTransaction';
 import Chart from './pages/Visualization';
+import Line from './pages/sample';
 
 
 
