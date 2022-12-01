@@ -1,11 +1,26 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import {Link} from 'react-router-dom';
 import NavbarCustomer from './NavbarCustomer';
 
 const CustomerHomepage = () =>
 {
+    const [data, setData] = useState([]);
+
     let customer = JSON.parse(localStorage.getItem('user-info'))
     localStorage.setItem('customer', JSON.stringify(customer))
+
+    console.log(data)
+
+    useEffect(() => {
+
+        axios.get(`http://localhost:8000/api/product-recommended`).then((res) => {
+          if (res.status === 200) {
+            setData(res.data.data);
+          }
+        });
+
+      },[]);
 
     return(
         <>

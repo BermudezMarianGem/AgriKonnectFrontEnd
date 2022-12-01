@@ -13,6 +13,7 @@ const Sidebars = () =>
                     <Link className="list-group-item list-group-item-action list-group-item-light p-3" to="/products">Products</Link>
                     <Link className="list-group-item list-group-item-action list-group-item-light p-3" to="/transaction">Transactions</Link>
                     <Link className="list-group-item list-group-item-action list-group-item-light p-3" to="/account">Account</Link>
+                    <Link className="list-group-item list-group-item-action list-group-item-light p-3" to="/sample">Visual</Link>
                 </div>
             </div>
         </div>

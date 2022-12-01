@@ -8,13 +8,15 @@ function Checkout() {
   let customer = JSON.parse(localStorage.getItem("user-info"));
   localStorage.setItem("customer", JSON.stringify(customer));
 
+
   const location = useLocation();
   const state = location.state;
   const history = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [orderItem, setOrderItem] = useState([])
   //const [cart, setCart] = useState(state);
 
-  console.log(customer);
+  console.log(state);
 
   const cartId = state.selectedItems[0].id;
   const sellerId = state.selectedItems[0].seller_id;

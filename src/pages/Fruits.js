@@ -112,7 +112,7 @@ function FruitPages()
             </div>
             <div>
             
-            <h1>Vegetable Section</h1>
+            <h1>Fruits Section</h1>
 
             <div className="card-body">
                                 

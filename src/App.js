@@ -51,6 +51,7 @@ import UnverifiedTable from './pages/UnverifiedSeller';
 import VerifiedTable from './pages/VerifiedSeller';
 import CustomerReviewPage from './pages/CustomerReviewPage';
 import CustomerRecentPage from './pages/CustomerRecentTransaction';
+import Chart from './pages/Visualization';
 
 
 
@@ -111,6 +112,8 @@ function App()
             <Route path="/products" element={<ViewProduct/>} />
             <Route path="/add-product" element={<AddProduct/>} />
             <Route path="/edit-product/:id" element={<EditProduct/>} />
+
+           {<Route path="/sample" elemet={<Chart/>}/>}
           </Routes>
     </div>
   );

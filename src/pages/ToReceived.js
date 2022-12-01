@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
 import NavbarCustomer from './NavbarCustomer';
 
-function ToReceivedPage() 
+function ToReceivedPage(props) 
 {
     const history = useNavigate();
     const [loading, setLoading] = useState(true);

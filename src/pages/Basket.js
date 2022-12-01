@@ -40,9 +40,11 @@ function Basket() {
   useEffect(() => {
     var total_ = 0;
 
+    //para sa total
     selectedItems.forEach((item) => {
       total_ = item.price * item.fruits_qty;
     });
+
 
     setTotal((prev) => prev + total_);
 
